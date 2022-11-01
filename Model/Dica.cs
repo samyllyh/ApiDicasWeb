@@ -1,8 +1,8 @@
 ﻿namespace ApiDicasWeb.Model;
 
-public class Dicas
+public class Dica
 {
-    public string Titulo { get; set; }
+    public string TituloId { get; set; }
 
     public string Descrição { get; set; }
 }
