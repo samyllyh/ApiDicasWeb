@@ -1,7 +1,20 @@
 using ApiDicasWeb.Context;
 using Microsoft.EntityFrameworkCore;
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins,
+                          policy =>
+                          {
+                              policy.WithOrigins("*")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
+});
 
 // Add services to the container.
 
@@ -13,7 +26,7 @@ builder.Services.AddSwaggerGen();
 var mysqlConnection = builder.Configuration.GetConnectionString("DefaultConnection"); //para conseguir acessar o banco
 
 builder.Services.AddDbContext<AppDbContext>(options =>
-                                            options.UseMySql(mysqlConnection, 
+                                            options.UseMySql(mysqlConnection,
                                             ServerVersion.AutoDetect(mysqlConnection)));
 
 var app = builder.Build();
@@ -26,6 +39,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 

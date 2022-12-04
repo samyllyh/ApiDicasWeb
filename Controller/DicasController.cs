@@ -41,8 +41,7 @@ namespace ApiDicasWeb.Controller
                 _context.SaveChanges();
 
                 //esse retorno nos indicas o id que a dica foi salva, retorna o codico 201 em caso de sucesseso 
-                return new CreatedAtRouteResult("Obter dicas",
-                    new { id = dicas.DicaId }, dicas);
+                return Ok(dicas);
             }
             catch (Exception)
             {
